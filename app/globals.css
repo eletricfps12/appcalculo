@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+/* Modo escuro: <html data-tema="escuro"> (definido antes da pintura, ver lib/tema.ts). */
+@custom-variant dark (&:where([data-tema="escuro"], [data-tema="escuro"] *));
+/* O contrário de `dark:` — usado no seletor de tema para marcar o sol sem esperar o JS. */
+@custom-variant claro (&:where(html:not([data-tema="escuro"]) *));
+
+/*
+ * Sistema visual (fonte única das cores — não use hex soltos nas telas):
+ * - marca: bordô #641E2B (marca-600), hover #4D1721 (marca-700)
+ * - carvao: #202328, sidebar e estrutura
+ * - marca-apoio: bordô claro/rosado, cor de apoio (ex.: 2ª série de barras), contrasta com o bordô nos dois temas
+ * - neutro: cinzas de texto secundário (#6B7280) e bordas (#E5E7EB)
+ * - status: sucesso #16834A; aviso, erro e info usam amber/red/blue do Tailwind
+ *   (amber-500 #F59E0B, red-600 #DC2626, blue-600 #2563EB)
+ */
+@theme {
+  --color-marca-50: #fbf3f4;
+  --color-marca-100: #f6e3e6;
+  --color-marca-200: #ecc6cc;
+  --color-marca-300: #db9ca6;
+  --color-marca-400: #bb6573;
+  --color-marca-500: #8e3445;
+  --color-marca-600: #641e2b;
+  --color-marca-700: #4d1721;
+  --color-marca-800: #3b1119;
+  --color-marca-900: #2a0c12;
+
+  --color-carvao: #202328;
+  --color-carvao-claro: #2b2f35;
+  --color-carvao-borda: #3a3f47;
+
+  /* Cor de apoio da marca (2ª série de barras, detalhes). Sem dourado: a paleta é só bordô + neutros. */
+  --color-marca-apoio: #d99ba6;
+
+  --color-neutro-50: #f9fafb;
+  --color-neutro-100: #f3f4f6;
+  --color-neutro-200: #e5e7eb;
+  --color-neutro-300: #d1d5db;
+  --color-neutro-400: #9ca3af;
+  --color-neutro-500: #6b7280;
+  --color-neutro-600: #4b5563;
+  --color-neutro-700: #374151;
+  --color-neutro-800: #2a2e34;
+  --color-neutro-900: #202328;
+
+  --color-sucesso-50: #effaf3;
+  --color-sucesso-100: #d7f2e1;
+  --color-sucesso-200: #b0e4c4;
+  --color-sucesso-600: #16834a;
+  --color-sucesso-700: #116a3b;
+  --color-sucesso-800: #0e5530;
+
+  --color-fundo: #f5f3ef;
+  /* Cards, tabelas, campos e menus (branco no claro). */
+  --color-superficie: #ffffff;
+  /* Bordô usado como TEXTO/borda sobre superfície (no escuro clareia para manter contraste). */
+  --color-marca-texto: #641e2b;
+
+  /* Sidebar e barra inferior: clara no tema claro (um tom abaixo do fundo, com borda), carvão no escuro. */
+  --color-nav: #ebe7e0;
+  --color-nav-borda: #dcd6cc;
+  --color-nav-borda-forte: #c9c2b6;
+  --color-nav-campo: #ffffff;
+  --color-nav-hover: rgb(32 35 40 / 0.06);
+  --color-nav-filho-ativo: #ffffff;
+  --color-nav-texto: #4b5563;
+  --color-nav-forte: #202328;
+  --color-nav-suave: #6b7280;
+
+  /* Apelidos semânticos (mesmos valores, nomes do guia de identidade). */
+  --color-primary: var(--color-marca-600);
+  --color-primary-hover: var(--color-marca-700);
+  --color-charcoal: var(--color-carvao);
+  --color-background: var(--color-fundo);
+  --color-surface: var(--color-superficie);
+  --color-text: var(--color-neutro-900);
+  --color-text-secondary: var(--color-neutro-500);
+  --color-border: var(--color-neutro-200);
+  --color-success: var(--color-sucesso-600);
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+  --color-info: #2563eb;
+
+  --shadow-card: 0 1px 2px rgb(32 35 40 / 0.04), 0 1px 3px rgb(32 35 40 / 0.06);
+  --shadow-elevado: 0 2px 4px rgb(32 35 40 / 0.04), 0 8px 24px -6px rgb(32 35 40 / 0.12);
+  --shadow-destaque: 0 1px 2px rgb(100 30 43 / 0.2), 0 10px 28px -12px rgb(100 30 43 / 0.45);
+  --shadow-flutuante: 0 24px 64px -16px rgb(32 35 40 / 0.35);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --animate-valor: valor 180ms ease-out;
+  --animate-surgir: surgir 200ms ease-out;
+  /* Entradas do login: começam invisíveis e terminam no lugar (forwards). */
+  --animate-entrar: entrar 600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-deslizar: deslizar 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-cartao: cartao 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(12px);
+  }
+}
+
+@keyframes deslizar {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateX(-24px);
+  }
+}
+
+@keyframes cartao {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(16px) scale(0.96);
+  }
+}
+
+@keyframes valor {
+  from {
+    opacity: 0.35;
+    transform: translateY(2px);
+  }
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/*
+ * Modo escuro: os MESMOS tokens com outros valores. As telas não mudam de classe:
+ * neutros invertem (900 = texto claro), tons claros de marca/sucesso viram tons
+ * escuros, e os preenchimentos bordô clareiam um pouco para não sumir no fundo.
+ * A sidebar usa a escala `gray` do Tailwind (fixa), pois é escura nos dois modos.
+ */
+html[data-tema="escuro"] {
+  color-scheme: dark;
+
+  --color-fundo: #111316;
+  --color-superficie: #1a1d21;
+  --color-marca-texto: #e8a3af;
+
+  --color-neutro-50: #16181c;
+  --color-neutro-100: #202328;
+  --color-neutro-200: #2d3137;
+  --color-neutro-300: #3b4047;
+  --color-neutro-400: #6b7280;
+  --color-neutro-500: #9ca3af;
+  --color-neutro-600: #b6bcc5;
+  --color-neutro-700: #d1d5db;
+  --color-neutro-800: #e5e7eb;
+  --color-neutro-900: #f3f4f6;
+
+  --color-marca-50: #2a1519;
+  --color-marca-100: #3a1c22;
+  --color-marca-200: #5a2a34;
+  --color-marca-300: #7e3a48;
+  --color-marca-400: #c46b7b;
+  --color-marca-500: #b4566a;
+  --color-marca-600: #7d2535;
+  --color-marca-700: #933043;
+  --color-marca-800: #6a1f2c;
+  --color-marca-900: #f5d6dc;
+
+  --color-sucesso-50: #0f2619;
+  --color-sucesso-100: #133220;
+  --color-sucesso-200: #1d4d32;
+  --color-sucesso-600: #2ea464;
+  --color-sucesso-700: #3cbf78;
+  --color-sucesso-800: #8fdcb0;
+
+  --color-carvao: #0c0e11;
+  --color-carvao-claro: #1a1d22;
+  --color-carvao-borda: #262a30;
+
+  --color-nav: #0c0e11;
+  --color-nav-borda: #23272d;
+  --color-nav-borda-forte: #3a3f47;
+  --color-nav-campo: #1a1d22;
+  --color-nav-hover: rgb(255 255 255 / 0.06);
+  --color-nav-filho-ativo: rgb(255 255 255 / 0.07);
+  --color-nav-texto: #d1d5db;
+  --color-nav-forte: #ffffff;
+  --color-nav-suave: #9ca3af;
+  --color-marca-apoio: #e6a9b4;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35), 0 1px 3px rgb(0 0 0 / 0.25);
+  --shadow-elevado: 0 2px 4px rgb(0 0 0 / 0.3), 0 8px 24px -6px rgb(0 0 0 / 0.5);
+  --shadow-destaque: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -12px rgb(125 37 53 / 0.6);
+  --shadow-flutuante: 0 24px 64px -16px rgb(0 0 0 / 0.7);
+}
+
+@layer base {
+  body {
+    background: var(--color-fundo);
+    color: var(--color-neutro-900);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-marca-texto);
+    outline-offset: 2px;
+  }
+}
+
+/* Números alinhados para leitura rápida dos pesos. */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Durante a troca de tema (lib/tema + components/tema): cores mudam de uma vez. */
+html.trocando-tema *,
+html.trocando-tema *::before,
+html.trocando-tema *::after {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
