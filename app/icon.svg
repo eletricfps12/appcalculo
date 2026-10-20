@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Ícone do Ajuste de Receitas: balança branca sobre o bordô da marca (#641E2B). -->
+  <defs>
+    <linearGradient id="fundo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a2535"/>
+      <stop offset="1" stop-color="#4d1721"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#fundo)"/>
+  <!-- Brilho fino no topo, como a borda dos cards. -->
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="1.5"/>
+  <g fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Coluna, base e travessão -->
+    <path d="M32 15v32M22 48h20M15 21.5h34"/>
+    <!-- Pratos -->
+    <path d="M15 21.5 9.5 34a6.5 6.5 0 0 0 11 0L15 21.5ZM49 21.5 43.5 34a6.5 6.5 0 0 0 11 0L49 21.5Z" fill="#fff" fill-opacity=".16"/>
+  </g>
+  <circle cx="32" cy="14" r="3" fill="#fff"/>
+</svg>
